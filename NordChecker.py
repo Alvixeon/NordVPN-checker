@@ -75,21 +75,19 @@ def is_logged_in(driver,username,password):
 #mccollum500@gmail.com:monkey123
 get_proxy()
 proxy = proxyy.pxy
-desired_capabilities = webdriver.DesiredCapabilities.CHROME['proxy'] = {
-    "httpProxy":proxy,
-    "ftpProxy":proxy,
-    "sslProxy":proxy,
-    "noProxy":None,
-    "proxyType":"MANUAL",
-    "class":"org.openqa.selenium.Proxy",
-    "autodetect":False
-}
+
+PROXY = proxy
+service_arg = [
+    '--proxy=' + PROXY,
+    '--proxy-type=html'
+]
+
 #clear instances that may have been left open
 os.system('taskkill /IM chromedriver.exe /F')
 #set the webdriver to chrome because why not
 chrome_options = Options()
 chrome_options.add_argument("--headless")
-driver = webdriver.Chrome(chrome_options=chrome_options, executable_path="chromedriver.exe", desired_capabilities=desired_capabilities)
+driver = webdriver.Chrome(chrome_options=chrome_options, executable_path="chromedriver.exe", service_args=service_arg)
 #get the instagram page
 driver.get('https://ucp.nordvpn.com/login/')
 time.sleep(5)
